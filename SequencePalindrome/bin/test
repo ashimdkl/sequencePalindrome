@@ -1,0 +1,25 @@
+public static Sequence<Integer> smooth(Sequence<Integer> s) {
+Sequence<Integer> smoothed = s.newInstance();
+if (s.length() > 1) {
+// Retrieve first two values but return second value
+int first = s.remove(0);
+int second = s.remove(0);
+s.add(0, second);
+// Trust the contract
+smoothed = smooth(s);
+
+03-sequence-smooth-function-solution.md 8/9/2023
+
+3 / 4
+// Compute the usual average
+int average = (first + second) / 2;
+// Compute a special average if the signs are the same
+if (first < 0 == second < 0) {
+average = first / 2 + second / 2 + (first % 2 + second % 2) / 2;
+}
+// Front load new average and restore s
+smoothed.add(0, average);
+s.add(0, first);
+}
+return smoothed;
+}
